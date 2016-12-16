@@ -17,7 +17,6 @@
         <jackson.version>2.8.5</jackson.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
-        <war.output.dir>/home/shanmukh/apache-tomcat-8.0.36/webapps</war.output.dir>
     </properties>
 
     <dependencies>
@@ -96,7 +95,6 @@
                 <configuration>
                     <warName>pantry</warName>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <outputDirectory>${war.output.dir}</outputDirectory>
                     <webResources>
                         <resource>
                             <directory>src/main/resources/</directory>
