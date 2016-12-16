@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * Copyright (c) CASABOTS 2016
+ * All Rights Reserved
+ ******************************************************************************/
+
 package com.casabots.pantry.controller;
 
 import com.casabots.pantry.model.User;
