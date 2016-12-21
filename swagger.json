@@ -1,0 +1,1061 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Pantry API",
+    "description": "The REST API of pantry allows us to manage Users and their accounts, orders, favourite salads and custom salads, Sally owner accounts,  Salads, Ingredients, User Ratings",
+    "termsOfService": "http://casabots.com/terms/",
+    "license": {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8080",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/text"
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Retrieve a list of users",
+        "operationId": "getUsers",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "users response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Creates a new user",
+        "operationId": "createUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful user creation"
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Gets a user based on user id",
+        "operationId": "getUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "the id of user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user response",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Removes a user based on user id",
+        "operationId": "removeUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "the id of user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user deletion success"
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/users/update": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Updates a user",
+        "operationId": "updateUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully updated user"
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/users/{userId}/orders": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Retrieves the list of orders ordered by the user",
+        "operationId": "getUserOrders",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Order"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/users/{userId}/favourite-salads": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Retrieves the list of favourite salads of the user",
+        "operationId": "getFavSalads",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/SaladList"
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/users/{userId}/custom-salads": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Retrieves the list of custom salads of the user",
+        "operationId": "getCustomSalads",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CustomSalad"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/sally-owners": {
+      "get": {
+        "tags": [
+          "Sally Owners"
+        ],
+        "description": "Retrieves the list of Sally owners",
+        "operationId": "getSallyOwners",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SallyOwner"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Sally Owners"
+        ],
+        "description": "Creates a new Sally owner",
+        "operationId": "createSallyOwner",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sallyowner",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SallyOwner"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful user creation"
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/sally-owners/{ownerId}": {
+      "get": {
+        "tags": [
+          "Sally Owners"
+        ],
+        "description": "Gets a sally owner based on owner id",
+        "operationId": "getSallyOwner",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ownerId",
+            "in": "path",
+            "description": "the id of owner",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/SallyOwner"
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Sally Owners"
+        ],
+        "description": "Removes a sally owner based on owner id",
+        "operationId": "removeSallyOwner",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ownerId",
+            "in": "path",
+            "description": "the id of owner",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "owner deletion success"
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/sally-owners/update": {
+      "post": {
+        "tags": [
+          "Sally Owners"
+        ],
+        "description": "Updates a sally owner",
+        "operationId": "updateSallyOwner",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sally owner",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SallyOwner"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully updated sally owner"
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/sally-owners/{ownerId}/sally-devices": {
+      "get": {
+        "tags": [
+          "Sally Owners"
+        ],
+        "description": "Gets a list of Sally devices owned by an owner",
+        "operationId": "getSallyDevicesOfOwner",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ownerId",
+            "in": "path",
+            "description": "the id of owner",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Sally"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "description": "Retrieves the list of orders",
+        "operationId": "getOrders",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Order"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/orders/place": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "description": "Places a new order",
+        "operationId": "placeOrder",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "order",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful order placement"
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/orders/{orderId}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "description": "Gets an order based on order id",
+        "operationId": "getOrder",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "the id of order",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/orders/{orderId}/cancel": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "description": "Cancels an order",
+        "operationId": "cancelOrder",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful order placement"
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/sally-devices": {
+      "get": {
+        "tags": [
+          "Sally Devices"
+        ],
+        "description": "Retrieves list of Sally devices based on location",
+        "operationId": "getSallyDevices",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "latitude",
+            "in": "query",
+            "description": "the latitude of the location of the user",
+            "required": true,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "description": "the longitude of the location of the user",
+            "required": true,
+            "type": "number",
+            "format": "double"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Sally"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/sally-devices/{sallyId}": {
+      "get": {
+        "tags": [
+          "Sally Devices"
+        ],
+        "description": "Gets a Sally based on sally id",
+        "operationId": "getSally",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sallyId",
+            "in": "path",
+            "description": "the id of Sally",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Sally"
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/sally-devices/{sallyId}/salads": {
+      "get": {
+        "tags": [
+          "Sally Devices"
+        ],
+        "description": "Retrieves list of salads of a Sally",
+        "operationId": "getSalads",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sallyId",
+            "in": "path",
+            "description": "the id of Sally",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SaladInfo"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/sally-devices/{sallyId}/salads/update": {
+      "post": {
+        "tags": [
+          "Sally Devices"
+        ],
+        "description": "Updates a salad of a Sally",
+        "operationId": "updateSalad",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sallyId",
+            "in": "path",
+            "description": "the id of Sally",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in" : "body",
+            "name" : "body",
+            "required" : false,
+            "schema" : {
+              "$ref" : "#/definitions/SaladInfo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully updated a salad"
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/sally-devices/{sallyId}/ingredients": {
+      "get": {
+        "tags": [
+          "Sally Devices"
+        ],
+        "description": "Retrieves list of ingredients of a Sally",
+        "operationId": "getIngredients",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sallyId",
+            "in": "path",
+            "description": "the id of Sally",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IngredientInfo"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/sally-devices/{sallyId}/ingredients/update": {
+      "post": {
+        "tags": [
+          "Sally Devices"
+        ],
+        "description": "Updates an ingredient of a Sally",
+        "operationId": "updateIngredient",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sallyId",
+            "in": "path",
+            "description": "the id of Sally",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in" : "body",
+            "name" : "body",
+            "required" : false,
+            "schema" : {
+              "$ref" : "#/definitions/IngredientInfo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully updated an ingredient"
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    },
+    "/sally-devices/ordersByUniqueId/{uniqueSallyId}": {
+      "get": {
+        "tags": [
+          "Sally Devices"
+        ],
+        "description": "Retrieves list of orders",
+        "operationId": "getOrdersByUniqueId",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uniqueSallyId",
+            "in": "path",
+            "description": "the unique id generated at Sally",
+            "required": true,
+            "type": "string"
+          }
+          ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Order"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "dob": {
+          "type": "string",
+          "format": "date"
+        },
+        "location": {
+          "$ref": "#/definitions/GeoLocation"
+        },
+        "savedSalads": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomSalad"
+          }
+        },
+        "favouriteSalads": {
+          "$ref": "#/definitions/SaladList"
+        }
+      }
+    },
+    "Sally": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "format": "double"
+            },
+            "longitude": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        },
+        "salads": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SaladInfo"
+          }
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IngredientInfo"
+          }
+        }
+      }
+    },
+    "SaladInfo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        },
+        "quantities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Quantity"
+          }
+        },
+        "availability": {
+          "type": "boolean"
+        }
+      }
+    },
+    "IngredientInfo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "quantities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Quantity"
+          }
+        },
+        "availability": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Quantity": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "calories": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "CustomSalad": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Ingredient"
+          }
+        }
+      }
+    },
+    "Ingredient": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "string"
+        }
+      }
+    },
+    "Order": {
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "type": "string"
+        },
+        "sallyId": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "orderedItem": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "quantity": {
+              "type": "string"
+            },
+            "ingredients": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Ingredient"
+              }
+            }
+          }
+        }
+      }
+    },
+    "SaladList": {
+      "type": "object",
+      "properties": {
+        "predefinedSalads": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "customSalads": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomSalad"
+          }
+        }
+      }
+    },
+    "SallyOwner": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "dob": {
+          "type": "string",
+          "format": "date"
+        },
+        "location": {
+          "$ref": "#/definitions/GeoLocation"
+        },
+        "address": {
+          "type": "string"
+        },
+        "sallyMachines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Sally"
+          }
+        }
+      }
+    },
+    "GeoLocation": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    }
+  }
+}

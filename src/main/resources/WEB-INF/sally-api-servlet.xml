@@ -20,6 +20,6 @@
     </bean>
     <bean id="mongoOperation" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg name="mongo" ref="mongo"/>
-        <constructor-arg name="databaseName" value="pantry-data"/>
+        <constructor-arg name="databaseName" value="${dbname}"/>
     </bean>
 </beans>

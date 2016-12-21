@@ -53,7 +53,7 @@ public class UserControllerTest {
         Query query = new Query(Criteria.where("firstName").is("testUser"));
         when(mongoOperation.findOne(eq(query), eq(User.class))).thenReturn(user);
 
-        controller.perform(get("/getUser/testUser"))
+        controller.perform(get("/users/testUser"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().string(new ObjectMapper().writeValueAsString(user)));

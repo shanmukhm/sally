@@ -18,24 +18,24 @@ public class UserController {
     @Autowired
     private MongoOperations mongoOperation;
 
-    @RequestMapping(method = RequestMethod.POST, path="/createUser")
+    @RequestMapping(method = RequestMethod.POST, path="/users")
     public void createUser(@RequestBody User user) {
         mongoOperation.save(user);
     }
 
-    @RequestMapping(path="/getUser/{fName}")
+    @RequestMapping(path="/users/{fName}")
     public User getPerson(@PathVariable String fName) {
         return mongoOperation.findOne(new Query(Criteria.where("firstName").is(fName)), User.class);
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/updateUser")
+    @RequestMapping(method = RequestMethod.POST, path = "/users/update")
     public void updateUser(@RequestBody User user) {
         User currentUser = mongoOperation.findOne(new Query(Criteria.where("firstName").is(user.getFirstName())), User.class);
         currentUser.updateUser(user);
         mongoOperation.save(currentUser);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/deleteUser/{fName}")
+    @RequestMapping(method = RequestMethod.DELETE, path = "/users/{fName}")
     public void deleteUser(@PathVariable final String fName) {
         User userTobeDeleted = mongoOperation.findOne(new Query(Criteria.where("firstName").is(fName)), User.class);
         mongoOperation.remove(userTobeDeleted);
