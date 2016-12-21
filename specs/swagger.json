@@ -6,13 +6,14 @@
     "description": "The REST API of pantry allows us to manage Users and their accounts, orders, favourite salads and custom salads, Sally owner accounts,  Salads, Ingredients, User Ratings",
     "termsOfService": "http://casabots.com/terms/",
     "license": {
-      "name": "MIT",
-      "url": "http://opensource.org/licenses/MIT"
+      "name": "Copyright (c) CASABOTS 2016",
+      "x-description": "Copyright (c) CASABOTS 2016, All rights reserved"
     }
   },
   "host": "localhost:8080",
+  "basePath": "/pantry",
   "schemes": [
-    "https"
+    "http"
   ],
   "consumes": [
     "application/json"
